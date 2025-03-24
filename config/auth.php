@@ -104,6 +104,21 @@ return [
             'expire' => 60,
             'throttle' => 60,
         ],
+        'admins' => [
+        'provider' => 'admins',
+        'table' => 'password_reset_tokens',
+        'expire' => 60, // Token expires in 60 minutes
+        ],
+        'restaurant_owners' => [
+            'provider' => 'restaurant_owners',
+            'table' => 'password_reset_tokens',
+            'expire' => 60,
+        ],
+        'customers' => [
+            'provider' => 'customers',
+            'table' => 'password_reset_tokens',
+            'expire' => 60,
+        ],
     ],
 
     /*

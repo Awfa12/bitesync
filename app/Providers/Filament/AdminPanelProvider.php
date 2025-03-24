@@ -2,6 +2,8 @@
 
 namespace App\Providers\Filament;
 
+use Filament\Facades\Filament;
+use Illuminate\Support\Facades\Password;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -20,6 +22,16 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 class AdminPanelProvider extends PanelProvider
 {
+    
+    public function boot()
+    {
+        Filament::serving(function () {
+            if (Filament::getCurrentPanel()->getId() === 'admin') {
+                Password::setDefaultDriver('admins');
+            }
+        });
+    }
+    
     public function panel(Panel $panel): Panel
     {
         return $panel
@@ -27,6 +39,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->profile()
+            ->passwordReset()
             ->authGuard('admin')
             ->login()
             ->colors([
