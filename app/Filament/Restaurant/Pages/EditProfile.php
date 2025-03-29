@@ -5,6 +5,7 @@ namespace App\Filament\Restaurant\Pages;
 use Exception;
 use Filament\Actions\Action;
 use Filament\Facades\Filament;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -51,6 +52,15 @@ class EditProfile extends Page implements HasForms
                 Section::make('Profile Information')
                     ->description('Update your account\'s profile information and email address.')
                     ->schema([
+                        FileUpload::make('avatar')
+                            ->required()
+                            ->placeholder('Select a profile photo')
+                            ->label('Profile Photo')
+                            ->image()
+                            ->avatar()
+                            ->preserveFilenames()
+                            ->disk('public')
+                            ->directory('avatars'),
                         TextInput::make('name')
                             ->required(),
                         TextInput::make('email')
