@@ -2,12 +2,14 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Admin\Pages\EditProfile;
 use Filament\Facades\Filament;
 use Illuminate\Support\Facades\Password;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\MenuItem;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -38,7 +40,6 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
-            ->profile()
             ->passwordReset()
             ->authGuard('admin')
             ->login()
@@ -49,6 +50,7 @@ class AdminPanelProvider extends PanelProvider
             ->discoverPages(in: app_path('Filament/Admin/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
                 Pages\Dashboard::class,
+                EditProfile::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Admin/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
@@ -68,6 +70,9 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+            ])
+            ->userMenuItems([ 
+                'profile' => MenuItem::make()->url(fn (): string => EditProfile::getUrl(panel:'admin'))
             ]);
     }
 }
