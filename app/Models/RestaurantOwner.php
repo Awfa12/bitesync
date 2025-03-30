@@ -16,6 +16,11 @@ class RestaurantOwner extends Authenticatable implements FilamentUser, HasAvatar
     protected $guarded = [];
     protected $hidden = ['password'];
 
+    public function restaurants()
+    {
+        return $this->hasMany(Restaurant::class, 'restaurant_owner_id');
+    }
+
     public function getFilamentAvatarUrl(): ?string
     {
         return Storage::url($this->avatar);

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Restaurant\Pages;
 
+use App\Models\RestaurantOwner;
 use Exception;
 use Filament\Actions\Action;
 use Filament\Facades\Filament;
@@ -65,6 +66,7 @@ class EditProfile extends Page implements HasForms
                             ->required(),
                         TextInput::make('email')
                             ->email()
+                            ->unique(table: RestaurantOwner::class)
                             ->required()
                             ->unique(ignoreRecord: true),
                     ]),

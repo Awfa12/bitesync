@@ -2,6 +2,7 @@
 
 namespace App\Filament\Admin\Pages;
 
+use App\Models\Admin;
 use Exception;
 use Filament\Actions\Action;
 use Filament\Facades\Filament;
@@ -64,6 +65,7 @@ class EditProfile extends Page implements HasForms
                         TextInput::make('name')
                             ->required(),
                         TextInput::make('email')
+                            ->unique(table: Admin::class)
                             ->email()
                             ->required()
                             ->unique(ignoreRecord: true),
